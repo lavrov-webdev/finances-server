@@ -18,7 +18,7 @@ async function bootstrap() {
     origin: [
       "http://localhost:5173",
       "http://localhost:4173",
-      "https://bbabrjced7868pqsc83u.containers.yandexcloud.net/",
+      "https://bbabrjced7868pqsc83u.containers.yandexcloud.net",
     ],
     credentials: true,
   });
