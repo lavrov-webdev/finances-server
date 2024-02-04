@@ -27,7 +27,7 @@ jobs:
           IMAGE_TAG: lates
       run: |
         touch .env
-        echo "DATABASE_URL={{ secrets.DATABASE_URL }}" >> .env
+        echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> .env
         docker build -t cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG .
         docker push cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG
 
