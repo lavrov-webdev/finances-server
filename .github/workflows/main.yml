@@ -1,0 +1,49 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "master" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    
+    - name: Login to Yandex Cloud Container Registry
+      id: login-cr
+      uses: yc-actions/yc-cr-login@v1
+      with:
+        yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
+
+    - name: Build
+      env:
+          CR_REGISTRY: ${{ secrets.CR_REGISTRY }}
+          CR_REPOSITORY: ${{ secrets.CR_REPOSITORY }}
+          IMAGE_TAG: lates
+      run: |
+        docker build -t cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG .
+        docker push cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG
+
+    - name: Deploy Serverless Container
+      id: deploy-sls-container
+      uses: yc-actions/yc-sls-container-deploy@v2
+      with:
+        yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
+        container-name: ${{ secrets.CONTAINER_NAME }}
+        folder-id: ${{ secrets.FOLDER_ID }}
+        revision-service-account-id: ${{ secrets.SERVICE_ACCOUNT_ID }}
+        revision-cores: 1
+        revision-memory: 1024Mb
+        revision-core-fraction: 50
+        revision-concurrency: 8
+        revision-image-url: ${{ secrets.REVISION_IMAGE_URL }}
+        revision-execution-timeout: 10
+        revision-env: |
+          DATABASE_URL=${{ secrets.DATABASE_URL }}
+          HASH_ROUNDS=3
+          JWT_SECRET=${{ secrets.JWT_SECRET }}
