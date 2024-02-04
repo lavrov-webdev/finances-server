@@ -28,6 +28,8 @@ jobs:
       run: |
         docker build -t cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG .
         docker push cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG
+        touch .env
+        echo "DATABASE_URL={{ secrets.DATABASE_URL }}" >> .env
 
     - name: Deploy Serverless Container
       id: deploy-sls-container
@@ -44,6 +46,5 @@ jobs:
         revision-image-url: ${{ secrets.REVISION_IMAGE_URL }}
         revision-execution-timeout: 10
         revision-env: |
-          DATABASE_URL=${{ secrets.DATABASE_URL }}
           HASH_ROUNDS=3
           JWT_SECRET=${{ secrets.JWT_SECRET }}
