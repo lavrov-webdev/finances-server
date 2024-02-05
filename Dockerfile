@@ -16,6 +16,8 @@ RUN apt-get update && \
          --output-document ./prisma/root.crt && \
     chmod 0600 ./prisma/root.crt
 
-RUN yarn prisma migrate deploy && yarn prisma generate && yarn build
+RUN yarn prisma migrate deploy
+RUN yarn prisma generate
+RUN yarn build
 
 CMD [ "node", "dist/main.js" ]
