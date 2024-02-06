@@ -5,19 +5,10 @@ WORKDIR /usr/src/app
 
 COPY package.json ./
 COPY yarn.lock ./
-COPY . .
 
 RUN yarn
-RUN yarn prisma migrate deploy
-RUN yarn build
 
-# Second stage: get only specific files from first stage and install packages
-FROM node:18
-
-WORKDIR /usr/src/app
-
-COPY --from=builder /usr/src/app/dist ./dist
-COPY package.json yarn.lock ./
+COPY . .
 
 RUN apt-get update && \
     apt-get install -y wget postgresql-client && \
@@ -28,5 +19,15 @@ RUN apt-get update && \
     chmod 0600 ~/.postgresql/root.crt && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
+
+RUN yarn prisma migrate deploy
+RUN yarn build
+
+# Second stage: get only specific files from first stage and install packages
+FROM node:18
+
+WORKDIR /usr/src/app
+
+COPY --from=builder /usr/src/app/dist ./dist
 
 CMD [ "node", "dist/main.js" ]
