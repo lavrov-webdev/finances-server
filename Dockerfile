@@ -14,9 +14,7 @@ RUN apt-get update && \
     apt-get install -y wget postgresql-client && \
     wget "https://storage.yandexcloud.net/cloud-certs/CA.pem" \
          --output-document ./prisma/root.crt && \
-    mkdir -p ~/.postgresql && \
-    mv ./prisma/root.crt ~/.postgresql/root.crt && \
-    chmod 0600 ~/.postgresql/root.crt && \
+    chmod 0600 ./prisma/root.crt && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
