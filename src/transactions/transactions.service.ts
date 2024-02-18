@@ -30,10 +30,10 @@ export class TransactionsService {
       where: { userId },
       orderBy: [
         {
-          date: "asc"
+          id: "asc"
         },
         {
-          id: "asc"
+          date: "asc"
         },
       ],
       include: {
