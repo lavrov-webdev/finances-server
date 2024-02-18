@@ -1,3 +1,4 @@
+# Test comment
 # First stage: install necessary packages and build dependencies
 FROM node:18 AS builder
 
