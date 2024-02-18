@@ -44,11 +44,11 @@ export class TransactionsService {
       where: { userId, sprintId },
       orderBy: [
         {
-          date: "asc"
+          id: "asc"
         },
         {
-          id: "asc"
-        }
+          date: "asc"
+        },
       ],
       include: {
         category: {
