@@ -28,7 +28,14 @@ export class TransactionsService {
   findAll(userId: number) {
     return this.prisma.transaction.findMany({
       where: { userId },
-      orderBy: { date: 'desc' },
+      orderBy: [
+        {
+          date: "asc"
+        },
+        {
+          id: "asc"
+        },
+      ],
       include: {
         category: {
           select: {
