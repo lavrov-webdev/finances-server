@@ -42,7 +42,7 @@ export class TransactionsService {
   async findBySprint(sprintId: number, userId: number) {
     return this.prisma.transaction.findMany({
       where: { userId, sprintId },
-      orderBy: { date: 'desc' },
+      orderBy: { date: 'desc', id: "desc" },
       include: {
         category: {
           select: {
