@@ -27,7 +27,7 @@ FROM node:18
 
 WORKDIR /usr/src/app
 
-ENV DATABASE_URL $DATABASE_URL
+ENV DATABASE_URL test
 
 COPY --from=builder /usr/src/app/dist ./dist
 
