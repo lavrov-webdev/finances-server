@@ -27,8 +27,6 @@ FROM node:18
 
 WORKDIR /usr/src/app
 
-ENV DATABASE_URL test
-
 COPY --from=builder /usr/src/app/dist ./dist
 
 CMD [ "node", "dist/main.js" ]
