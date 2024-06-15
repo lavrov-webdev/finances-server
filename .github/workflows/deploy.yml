@@ -45,6 +45,7 @@ jobs:
         revision-concurrency: 8
         revision-image-url: ${{ secrets.REVISION_IMAGE_URL }}
         revision-execution-timeout: 10
+        revision-provisioned: 1
         revision-env: |
           HASH_ROUNDS=3
           JWT_SECRET=${{ secrets.JWT_SECRET }}
