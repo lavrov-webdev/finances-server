@@ -45,6 +45,9 @@ export class EnvelopesService {
             gt: date,
           },
         },
+        category: {
+          isActive: true
+        }
       },
       include: {
         sprint: {
