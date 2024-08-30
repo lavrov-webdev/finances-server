@@ -14,13 +14,9 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup("api/docs", app, document);
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
+  console.log()
   app.enableCors({
-    origin: [
-      "http://localhost:5173",
-      "http://localhost:4173",
-      "http://localhost:8080",
-      "https://bbabrjced7868pqsc83u.containers.yandexcloud.net",
-    ],
+    origin: process.env.DEV === "true" ? true : "https://bbabrjced7868pqsc83u.containers.yandexcloud.net",
     credentials: true,
   });
   await app.listen(process.env.PORT);
