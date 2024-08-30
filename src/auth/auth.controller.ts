@@ -5,7 +5,6 @@ import {
   ApiBadRequestResponse,
   ApiCreatedResponse,
   ApiNoContentResponse,
-  ApiOkResponse,
   ApiTags,
 } from '@nestjs/swagger';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
@@ -16,7 +15,7 @@ import { Response } from 'express';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @ApiOkResponse({ description: 'Success login' })
+  @ApiNoContentResponse({ description: 'Success login' })
   @ApiBadRequestResponse({ description: 'Validation error' })
   @Post('login')
   async signIn(
