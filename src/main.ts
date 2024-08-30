@@ -16,7 +16,7 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
   console.log()
   app.enableCors({
-    origin: process.env.DEV === "true" ? true : "https://bbabrjced7868pqsc83u.containers.yandexcloud.net",
+    origin: process.env.DEV === "true" || "https://bbabrjced7868pqsc83u.containers.yandexcloud.net",
     credentials: true,
   });
   await app.listen(process.env.PORT);
