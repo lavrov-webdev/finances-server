@@ -24,7 +24,7 @@ jobs:
       env:
           CR_REGISTRY: ${{ secrets.CR_REGISTRY }}
           CR_REPOSITORY: ${{ secrets.CR_REPOSITORY }}
-          IMAGE_TAG: lates
+          IMAGE_TAG: latest
       run: |
         touch .env
         echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> .env
