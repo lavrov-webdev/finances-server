@@ -6,8 +6,8 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider          = "postgresql"
+  url               = env("DATABASE_URL")
   shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
@@ -23,6 +23,11 @@ model User {
   transactions Transaction[]
 }
 
+enum CategoryType {
+  LOSS
+  INCOME
+}
+
 model Category {
   id           Int           @id @default(autoincrement())
   createdAt    DateTime      @default(now())
@@ -31,6 +36,7 @@ model Category {
   isActive     Boolean       @default(true)
   user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId       Int
+  type         CategoryType  @default(LOSS)
   envelopes    Envelope[]
   transactions Transaction[]
 
