@@ -27,4 +27,4 @@ WORKDIR /usr/src/app
 
 COPY --from=builder /usr/src/app/dist ./dist
 
-CMD [ "yarn", "start" ]
+CMD [ "node", "dist/main.js" ]
