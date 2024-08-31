@@ -22,7 +22,6 @@ import {
   ApiOkResponse,
   ApiTags,
   ApiUnauthorizedResponse,
-  PartialType,
   PickType,
 } from '@nestjs/swagger';
 import {

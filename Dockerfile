@@ -1,5 +1,3 @@
-# Test comment
-# First stage: install necessary packages and build dependencies
 FROM node:18 AS builder
 
 WORKDIR /usr/src/app
@@ -29,4 +27,4 @@ WORKDIR /usr/src/app
 
 COPY --from=builder /usr/src/app/dist ./dist
 
-CMD [ "node", "dist/main.js" ]
+CMD [ "yarn", "start" ]
