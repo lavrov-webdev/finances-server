@@ -22,6 +22,7 @@ import {
   ApiOkResponse,
   ApiTags,
   ApiUnauthorizedResponse,
+  PartialType,
   PickType,
 } from '@nestjs/swagger';
 import {
@@ -37,7 +38,7 @@ import {
 @UseGuards(AuthGuard)
 @Controller('sprints')
 export class SprintsController {
-  constructor(private readonly sprintsService: SprintsService) {}
+  constructor(private readonly sprintsService: SprintsService) { }
 
   @Post()
   @ApiCreatedResponse({ type: SprintResponseWithEnvelopesDto })
@@ -59,7 +60,7 @@ export class SprintsController {
 
   @Get('current')
   @ApiOkResponse({
-    type: PickType<SprintResponseDto, 'id'>,
+    type: PickType(SprintResponseDto, ['id']),
   })
   @ApiNotFoundResponse({ description: 'Sprint not found' })
   findCurrent(
