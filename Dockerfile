@@ -1,4 +1,4 @@
-FROM node:18
+FROM node:18-alpine
 
 # Устанавливаем рабочую директорию в контейнере
 WORKDIR /app
