@@ -1,4 +1,4 @@
-FROM node:18-alpine
+FROM node:18
 
 # Устанавливаем рабочую директорию в контейнере
 WORKDIR /app
@@ -9,12 +9,13 @@ COPY package.json yarn.lock ./
 # Устанавливаем зависимости
 RUN yarn
 
-RUN apk update && \
-    apk add --no-cache wget postgresql-client && \
+RUN apt-get update && \
+    apt-get install -y wget postgresql-client && \
     wget "https://storage.yandexcloud.net/cloud-certs/CA.pem" \
          --output-document ./prisma/root.crt && \
     chmod 0600 ./prisma/root.crt && \
-    rm -rf /var/cache/apk/*
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
     
 RUN yarn prisma generate
 RUN yarn prisma migrate deploy
