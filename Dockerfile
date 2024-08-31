@@ -1,12 +1,15 @@
-FROM node:18 AS builder
+FROM node:18-alpine
 
-WORKDIR /usr/src/app
+# Устанавливаем рабочую директорию в контейнере
+WORKDIR /app
 
-COPY package.json ./
-COPY yarn.lock ./
+# Копируем package.json и yarn.lock в контейнер
+COPY package.json yarn.lock ./
 
+# Устанавливаем зависимости
 RUN yarn
 
+# Копируем остальные файлы в контейнер
 COPY . .
 
 RUN apt-get update && \
@@ -17,14 +20,10 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-RUN yarn prisma migrate deploy
+# Собирать проект
 RUN yarn build
+RUN yarn prisma generate
+RUN yarn prisma migrate deploy
 
-# Second stage: get only specific files from first stage and install packages
-FROM node:18
-
-WORKDIR /usr/src/app
-
-COPY --from=builder /usr/src/app/dist ./dist
-
-CMD [ "node", "dist/main.js" ]
+# Определяем команду для запуска вашего приложения
+CMD ["yarn", "start:prod"]
