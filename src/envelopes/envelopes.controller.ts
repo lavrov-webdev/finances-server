@@ -11,7 +11,7 @@ import { EnvelopesService } from './envelopes.service';
 import { UpdateEnvelopeDto } from './dto/update-envelope.dto';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { DateTransformer } from 'src/transformers/date.transformer';
-import { EnvelopeResponseDto } from './dto/envelope.response.dto';
+import { EnvelopeResponseDto, EnvelopeWithSprintDatesAndCategoryInfo } from './dto/envelope.response.dto';
 import {
   ApiCookieAuth,
   ApiNotFoundResponse,
@@ -28,7 +28,7 @@ import { RequestWithUser } from 'src/interfaces';
 @UseGuards(AuthGuard)
 @Controller('envelopes')
 export class EnvelopesController {
-  constructor(private readonly envelopesService: EnvelopesService) {}
+  constructor(private readonly envelopesService: EnvelopesService) { }
 
   @Patch(':id')
   @ApiOkResponse({ type: EnvelopeResponseDto })
@@ -43,7 +43,7 @@ export class EnvelopesController {
 
   @ApiParam({ name: 'date', example: '2023-06-23', type: String })
   @Get('by_date/:date')
-  @ApiOkResponse({ type: [EnvelopeResponseDto] })
+  @ApiOkResponse({ type: [EnvelopeWithSprintDatesAndCategoryInfo] })
   getByDate(
     @Param('date', DateTransformer)
     date: string,
