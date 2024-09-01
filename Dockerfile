@@ -18,11 +18,11 @@ RUN apk update && \
     rm -rf /var/cache/apk/*
     
 RUN yarn prisma generate
-RUN yarn prisma migrate deploy
 
 # Копируем остальные файлы в контейнер
 COPY . .
 
+RUN yarn prisma migrate deploy
 # Собирать проект
 RUN yarn build
 
