@@ -52,7 +52,7 @@ export class SprintResponseDetailedInfo extends SprintResponseDto {
         transactions: [trancationExample],
       },
     ],
-    type: EnvelopeWithTransactionsResponseDto,
+    type: [EnvelopeWithTransactionsResponseDto],
   })
   envelopes: EnvelopeWithTransactionsResponseDto[];
 
