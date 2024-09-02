@@ -9,7 +9,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-  constructor(private jwtService: JwtService, private prisma: PrismaService) {}
+  constructor(private jwtService: JwtService, private prisma: PrismaService) { }
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
@@ -25,8 +25,8 @@ export class AuthGuard implements CanActivate {
         where: { id: payload.sub },
       });
       request['user'] = userToReturn;
-    } catch {
-      throw new UnauthorizedException('Invalid access token');
+    } catch (e) {
+      throw new UnauthorizedException('Invalid access token: ', JSON.stringify(e));
     }
     return true;
   }
